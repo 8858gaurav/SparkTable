@@ -60,6 +60,9 @@ if __name__ == '__main__':
     # saveAsTextFile will work only with RDDs, not with DataFrames
     df.rdd.saveAsTextFile("/Users/gauravmishra/Desktop/adding/SparkTable-2/Output/lung_cancer")
 
+
+    df.write.mode('overwrite').saveAsTable("lung_cancer", format="parquet")
+
     # to keep spark web UI alive locally
     time.sleep(86400000)
 
