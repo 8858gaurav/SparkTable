@@ -58,6 +58,33 @@ if __name__ == '__main__':
     spark.sql("insert into itv016380_vs.orders (select * from orders_itv016380)")
     spark.sql("describe table itv016380_vs.orders")
     spark.sql("describe extended itv016380_vs.orders").show(truncate = False)
+    
+# +----------------------------+-----------------------------------------------------------------------------+-------+
+# |col_name                    |data_type                                                                    |comment|
+# +----------------------------+-----------------------------------------------------------------------------+-------+
+# |order_id                    |int                                                                          |null   |
+# |order_date                  |date                                                                         |null   |
+# |customer_id                 |int                                                                          |null   |
+# |order_status                |string                                                                       |null   |
+# |                            |                                                                             |       |
+# |# Detailed Table Information|                                                                             |       |
+# |Database                    |itv016380_vs                                                                 |       |
+# |Table                       |orders                                                                       |       |
+# |Owner                       |itv016380                                                                    |       |
+# |Created Time                |Tue Jul 08 08:27:25 EDT 2025                                                 |       |
+# |Last Access                 |UNKNOWN                                                                      |       |
+# |Created By                  |Spark 3.1.2                                                                  |       |
+# |Type                        |MANAGED                                                                      |       |
+# |Provider                    |hive                                                                         |       |
+# |Table Properties            |[transient_lastDdlTime=1751977736]                                           |       |
+# |Statistics                  |840836625 bytes                                                              |       |
+# |Location                    |hdfs://m01.itversity.com:9000/user/itv016380/warehouse/itv016380_vs.db/orders|       |
+# |Serde Library               |org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe                           |       |
+# |InputFormat                 |org.apache.hadoop.mapred.TextInputFormat                                     |       |
+# |OutputFormat                |org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat                   |       |
+# +----------------------------+-----------------------------------------------------------------------------+-------+
+
+
     #!hadoop fs -ls -h /user/itv016380/warehouse/itv016380_vs.db/orders, you will find 9 files under this folder, since we have 9 partitions in hdfs.
     # this is a managed table, so the data will be deleted when the table is dropped. this table is stored in the warehouse directory.
     # this table will be available in the hive metastore, so you can query it from hive as well, and it's managed by hive.
@@ -69,3 +96,28 @@ if __name__ == '__main__':
 
     # a new csv file will be createded under this folder: /user/itv016380/data_vs/, when we called the insert command.
     #  e.g spark.sql("insert into itv016380_vs.orders_ext values(1111, '12-02-2023', 222, 'CLOSEED')")
+
+    spark.sql("describe extended itv016380_vs.orders_ext").show(truncate = False)
+
+#  +----------------------------+---------------------------------------------------------+-------+
+# |col_name                    |data_type                                                |comment|
+# +----------------------------+---------------------------------------------------------+-------+
+# |order_id                    |int                                                      |null   |
+# |order_date                  |string                                                   |null   |
+# |customer_id                 |int                                                      |null   |
+# |order_status                |string                                                   |null   |
+# |                            |                                                         |       |
+# |# Detailed Table Information|                                                         |       |
+# |Database                    |itv016380_vs                                             |       |
+# |Table                       |orders_ext                                               |       |
+# |Owner                       |itv016380                                                |       |
+# |Created Time                |Tue Jul 08 09:26:11 EDT 2025                             |       |
+# |Last Access                 |UNKNOWN                                                  |       |
+# |Created By                  |Spark 3.1.2                                              |       |
+# |Type                        |EXTERNAL                                                 |       |
+# |Provider                    |csv                                                      |       |
+# |Location                    |hdfs://m01.itversity.com:9000/user/itv016380/data_vs     |       |
+# |Serde Library               |org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       |       |
+# |InputFormat                 |org.apache.hadoop.mapred.SequenceFileInputFormat         |       |
+# |OutputFormat                |org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat|       |
+# +----------------------------+---------------------------------------------------------+-------+
