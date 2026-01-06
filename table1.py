@@ -56,7 +56,7 @@ if __name__ == '__main__':
 #     df = df.withColumn('treatment_type', df.select(col('treatment_type')).cast('string')) 
 
     df1.printSchema()
-    # will create a new table in the warehouse directory, will create the same no of files as the no of partitions
+    # will create the same no of files as the no of partitions, it will not create the table
     # saveAsTextFile will work only with RDDs, not with DataFrames
     df.rdd.saveAsTextFile("/Users/gauravmishra/Desktop/adding/SparkTable-2/Output/lung_cancer")
 
